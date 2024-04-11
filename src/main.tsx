@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
+import './index.scss'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { About } from './components/About.tsx'
-import Movies from './components/Movies.tsx'
+import { About } from './features/About.tsx'
+import Movies from './features/Movies.tsx'
 import { Provider } from 'react-redux'
 import store from './store.ts'
 
