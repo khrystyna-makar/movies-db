@@ -4,7 +4,8 @@ export interface Movie {
     id: number,
     title: string,
     popularity: number,
-    overview: string
+    overview: string,
+    image?: string
 }
 
 interface MovieState {

@@ -6,6 +6,7 @@ interface MovieCardProps {
     title: string;
     overview: string;
     popularity: number;
+    image?: string;
     adult?: boolean;
     backdrop_path?: string;
     genre_ids?: number[];
@@ -18,11 +19,11 @@ interface MovieCardProps {
     vote_count?: number;
 }
 
-export const MovieCard = ({ id, title, overview, popularity }: MovieCardProps) => {
+export const MovieCard = ({ id, title, overview, popularity, image = "/movie-thumb.png" }: MovieCardProps) => {
     return (
         <div className={styles.card}>
             <img className={styles.thumbnail}
-                src="/movie-thumb.png"
+                src={image}
                 alt="movie-thumb" />
             <div className={styles.content}>
                 <div>
