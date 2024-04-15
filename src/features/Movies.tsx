@@ -2,9 +2,9 @@ import { FetchMovies, Movie } from "../reducers/movies"
 import { connect } from 'react-redux'
 import { RootState } from "../store"
 import { MovieCard } from "./MovieCard"
-import styles from './Movies.module.scss'
 import { useEffect } from "react"
 import { useAppDispatch } from "../hooks"
+import { Container, Grid, LinearProgress, Typography } from "@mui/material"
 
 interface MoviesProps {
     movies: Movie[],
@@ -23,21 +23,23 @@ const Movies = ({ movies, loading }: MoviesProps) => {
     }, [dispatch]);
 
     return (
-        <section>
-            <div className={styles.list}>
-                {loading ? <h3>Loading...</h3> :
-
-                movies.map(m => (
-                    <MovieCard
-                        id={m.id}
-                        key={m.id}
-                        title={m.title}
-                        overview={m.overview}
-                        image={m.image}
-                        popularity={m.popularity} />
-                ))}
-            </div>
-        </section>
+        <Container sx={{ py: 8 }} maxWidth="lg">
+            <Typography variant="h4" align="center">Now Playing</Typography>
+            {loading ? <LinearProgress color="secondary" /> :
+                (<Grid container spacing={4}>
+                    {movies.map(m => (
+                        <Grid item key={m.id} xs={12} sm={6} md={4}>
+                            <MovieCard
+                                id={m.id}
+                                key={m.id}
+                                title={m.title}
+                                overview={m.overview}
+                                image={m.image}
+                                popularity={m.popularity} />
+                        </Grid>
+                    ))}
+                </Grid>)}
+        </Container>
     )
 }
 
