@@ -1,5 +1,6 @@
-import { Link as RouterLink} from "react-router-dom";
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { Button, Card, CardActions, CardContent, CardMedia, Typography, IconButton, Tooltip } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 interface MovieCardProps {
     id: number;
@@ -17,13 +18,14 @@ interface MovieCardProps {
     video?: boolean;
     vote_average?: number;
     vote_count?: number;
+    enableUserActions?: boolean;
 }
 
-export const MovieCard = ({ id, title, overview, popularity, image = "/movie-thumb.png" }: MovieCardProps) => {
+export const MovieCard = ({ id, title, overview, popularity, enableUserActions, image = "/movie-thumb.png" }: MovieCardProps) => {
     return (
-        <Card sx={{height: "100%", display: "flex", flexDirection: "column"}}>
-            <CardMedia component="div" image={image} sx={{pt: "56.25%"}} />
-            <CardContent sx={{flexGrow: 1}}>
+        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+            <CardMedia component="div" image={image} sx={{ pt: "56.25%" }} />
+            <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h5" gutterBottom>
                     {title}
                 </Typography>
@@ -34,6 +36,11 @@ export const MovieCard = ({ id, title, overview, popularity, image = "/movie-thu
                 <Button component={RouterLink} to={`/movies/${id}`} color="secondary">
                     Details
                 </Button>
+                {enableUserActions && <Tooltip title="Add to favorites">
+                    <IconButton>
+                        <FavoriteIcon />
+                    </IconButton>
+                </Tooltip>}
             </CardActions>
         </Card>
     )

@@ -1,5 +1,10 @@
+import { Container } from "@mui/material"
+import CountdownText from "./CountdownText"
+
 export const About = () => {
     return (
-        <p>Coming soon...</p>
+        <Container sx={{ py: 8 }} maxWidth="md">
+            <CountdownText />
+        </Container>
     )
 }
