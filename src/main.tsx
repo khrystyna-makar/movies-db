@@ -8,16 +8,19 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { About } from './features/About.tsx'
+import { About } from './features/About/About.tsx'
 import Movies from './features/Movies.tsx'
 import { Provider } from 'react-redux'
 import store from './store.ts'
 import Home from './features/Home.tsx';
+import { ErrorBoundary } from './ErrorBoundary.tsx';
 
 function AppEntryPoint() {
   return (
     <Provider store={store}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Provider>
   )
 }
