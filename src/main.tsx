@@ -9,7 +9,7 @@ import App from './App.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { About } from './features/About/About.tsx'
-import Movies from './features/Movies.tsx'
+import Movies from './features/Movies/Movies.tsx'
 import { Provider } from 'react-redux'
 import store from './store.ts'
 import Home from './features/Home.tsx';
