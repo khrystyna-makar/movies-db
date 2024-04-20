@@ -2,12 +2,13 @@ import { fetchNextPage, resetMovies } from "../../reducers/movies"
 import { connect } from 'react-redux'
 import { RootState } from "../../store"
 import MovieCard from "./MovieCard"
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState, lazy, Suspense } from "react"
 import { useAppDispatch, useAppSelector } from "../../hooks"
 import { Container, Grid, LinearProgress } from "@mui/material"
 import { AuthContext, anonymousUser } from "../../AuthContext"
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver"
-import MoviesFilter, { Filters } from "./MoviesFilter"
+
+const MoviesFilter = lazy(() => import("./MoviesFilter"))
 
 const Movies = () => {
 
@@ -16,7 +17,7 @@ const Movies = () => {
     const loading = useAppSelector((state) => state.movies.loading);
     const hasMorePages = useAppSelector((state) => state.movies.hasMorePages);
 
-    const [filters, setFilters] = useState<Filters>()
+    const [filters, setFilters] = useState<any>()
 
     const { user } = useContext(AuthContext);
     const loggedIn = user != anonymousUser;
@@ -30,24 +31,26 @@ const Movies = () => {
     useEffect(() => {
         if (entry?.isIntersecting && hasMorePages) {
             const moviesFilters = filters ? {
-                keywords: filters.keywords.map(k => k.id)
+                keywords: filters.keywords.map((k: any) => k.id)
             } : undefined;
             dispatch(fetchNextPage(moviesFilters));
         }
     }, [dispatch, entry?.isIntersecting, hasMorePages, filters]);
 
-    const handleAddToFavorite = useCallback( (id: number) => {
+    const handleAddToFavorite = useCallback((id: number) => {
         alert(`not implemented, action: ${user.name} is adding movie ${id} to favorites`)
     }, [user.name]);
 
     return (
         <Grid container spacing={2} sx={{ flexWrap: "nowrap" }}>
             <Grid item xs="auto">
-                <MoviesFilter onApply={(f) => {
-                    dispatch(resetMovies())
-                    setFilters(f)
-                } 
-                }/>
+                <Suspense fallback={<span>Loading filters...</span>}>
+                    <MoviesFilter onApply={(f) => {
+                        dispatch(resetMovies())
+                        setFilters(f)
+                    }
+                    } />
+                </Suspense>
             </Grid>
             <Grid item xs={12}>
                 <Container sx={{ py: 8 }} maxWidth="lg">
