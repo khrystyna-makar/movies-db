@@ -23,7 +23,7 @@ const MoviesFilter = ({onApply}: MoviesFilterProps) => {
         }
     })
 
-    const fetchKeywords = useMemo(() => debounce(async (query: string) => {
+    const fetchKeywordsOptions = async (query: string) => {
         if (query) {
             setKeywordsLoading(true);
             const options = await client.getKeywords(query);
@@ -32,8 +32,9 @@ const MoviesFilter = ({onApply}: MoviesFilterProps) => {
         } else {
             setKeywordsOptions([]);
         }
-    }, 1000),
-        [])
+    }
+
+    const fetchKeywords = useMemo(() => debounce(fetchKeywordsOptions, 1000), [])
 
     return (
         <Paper sx={{ m: 2, p: 0.5 }}>
